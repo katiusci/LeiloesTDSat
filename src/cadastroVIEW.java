@@ -71,7 +71,8 @@ public class cadastroVIEW extends javax.swing.JFrame {
             }
         });
 
-        btnsalvar.setBackground(new java.awt.Color(0, 204, 204));
+        btnsalvar.setBackground(new java.awt.Color(33, 150, 243));
+        btnsalvar.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         btnsalvar.setForeground(new java.awt.Color(255, 255, 255));
         btnsalvar.setText("Salvar");
         btnsalvar.setActionCommand("Salvar");
@@ -172,7 +173,25 @@ public class cadastroVIEW extends javax.swing.JFrame {
     }//GEN-LAST:event_btnProdutosActionPerformed
 
     private void btnsalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsalvarActionPerformed
-        javax.swing.JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
+        
+    try {
+    String nome = cadastroNome.getText();
+    String valor = cadastroValor.getText();
+
+    ProdutosDTO produto = new ProdutosDTO();
+    produto.setNome(nome);
+    produto.setValor(Integer.parseInt(valor));
+
+    ProdutosDAO dao = new ProdutosDAO();
+    dao.cadastrarProduto(produto);
+
+    javax.swing.JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
+
+} catch (Exception e) {
+    javax.swing.JOptionPane.showMessageDialog(null, "Erro ao cadastrar!");
+}
+
+
     }//GEN-LAST:event_btnsalvarActionPerformed
 
     /**
