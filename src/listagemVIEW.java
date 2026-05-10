@@ -17,9 +17,113 @@ public class listagemVIEW extends javax.swing.JFrame {
      * Creates new form listagemVIEW
      */
     public listagemVIEW() {
-        initComponents();
-        listarProdutos();
+    initComponents();
+    listarProdutos();
+    
+ 
+    // Cabeçalho azul da tabela
+    listaProdutos.getTableHeader().setDefaultRenderer(new javax.swing.table.DefaultTableCellRenderer() {
+        @Override
+        public java.awt.Component getTableCellRendererComponent(
+                javax.swing.JTable table, Object value, boolean isSelected,
+                boolean hasFocus, int row, int column) {
+
+            javax.swing.JLabel label = (javax.swing.JLabel) super.getTableCellRendererComponent(
+                    table, value, isSelected, hasFocus, row, column);
+
+            label.setBackground(new java.awt.Color(10, 61, 98));
+            label.setForeground(java.awt.Color.WHITE);
+            label.setFont(new java.awt.Font("Segoe UI", 1, 12));
+            label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+            label.setOpaque(true);
+
+            return label;
+        }
+    });
+
+    // Ajustar tamanho das colunas
+   listaProdutos.getColumnModel().getColumn(0).setPreferredWidth(40);   // ID
+listaProdutos.getColumnModel().getColumn(1).setPreferredWidth(240);  // Nome (menor)
+listaProdutos.getColumnModel().getColumn(2).setPreferredWidth(90);   // Valor (um pouco maior)
+listaProdutos.getColumnModel().getColumn(3).setPreferredWidth(110);  // Status
+
+    // Status "Vendido" em verde
+    javax.swing.table.DefaultTableCellRenderer statusRenderer = new javax.swing.table.DefaultTableCellRenderer() {
+        @Override
+        public java.awt.Component getTableCellRendererComponent(
+                javax.swing.JTable table, Object value, boolean isSelected,
+                boolean hasFocus, int row, int column) {
+
+            java.awt.Component c = super.getTableCellRendererComponent(
+                    table, value, isSelected, hasFocus, row, column);
+
+            if (column == 3 && value != null && value.toString().equals("Vendido")) {
+                c.setForeground(new java.awt.Color(0, 153, 76));
+            } else {
+                c.setForeground(java.awt.Color.BLACK);
+            }
+
+            return c;
+        }
+    };
+
+    listaProdutos.getColumnModel().getColumn(3).setCellRenderer(statusRenderer);
+
+    // Cor dos botões
+    btnVender.setBackground(new java.awt.Color(10, 61, 98));
+    btnVender.setForeground(java.awt.Color.WHITE);
+    btnVender.setOpaque(true);
+    btnVender.setBorderPainted(false);
+
+    btnVendas.setBackground(new java.awt.Color(10, 61, 98));
+    btnVendas.setForeground(java.awt.Color.WHITE);
+    btnVendas.setOpaque(true);
+    btnVendas.setBorderPainted(false);
+
+    btnVoltar.setBackground(new java.awt.Color(192, 57, 43)); // vermelho elegante
+btnVoltar.setForeground(java.awt.Color.WHITE);
+btnVoltar.setOpaque(true);
+btnVoltar.setBorderPainted(false);
+    
+   // alinhar ID ao centro
+javax.swing.table.DefaultTableCellRenderer centro = new javax.swing.table.DefaultTableCellRenderer();
+centro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+listaProdutos.getColumnModel().getColumn(0).setCellRenderer(centro);
+
+// alinhar Valor ao centro
+javax.swing.table.DefaultTableCellRenderer centroValor = new javax.swing.table.DefaultTableCellRenderer();
+centroValor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+listaProdutos.getColumnModel().getColumn(2).setCellRenderer(centroValor);
+
+javax.swing.table.DefaultTableCellRenderer esquerda = new javax.swing.table.DefaultTableCellRenderer();
+esquerda.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+listaProdutos.getColumnModel().getColumn(1).setCellRenderer(esquerda);
+// alinhar Status ao centro e manter Vendido verde
+javax.swing.table.DefaultTableCellRenderer statusCentro = new javax.swing.table.DefaultTableCellRenderer() {
+    @Override
+    public java.awt.Component getTableCellRendererComponent(
+            javax.swing.JTable table, Object value, boolean isSelected,
+            boolean hasFocus, int row, int column) {
+
+        java.awt.Component c = super.getTableCellRendererComponent(
+                table, value, isSelected, hasFocus, row, column);
+
+        setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        if (value != null && value.toString().equals("Vendido")) {
+            c.setForeground(new java.awt.Color(0, 153, 76));
+        } else {
+            c.setForeground(java.awt.Color.BLACK);
+        }
+
+        return c;
     }
+};
+
+listaProdutos.getColumnModel().getColumn(3).setCellRenderer(statusCentro);
+}
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -56,7 +160,9 @@ public class listagemVIEW extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(listaProdutos);
 
-        jLabel1.setFont(new java.awt.Font("Lucida Fax", 0, 18)); // NOI18N
+        jLabel1.setBackground(new java.awt.Color(16, 97, 152));
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(16, 97, 152));
         jLabel1.setText("Lista de Produtos");
 
         jLabel2.setFont(new java.awt.Font("Lucida Fax", 0, 14)); // NOI18N
@@ -90,33 +196,34 @@ public class listagemVIEW extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnVender))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(btnVoltar)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnVendas, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(49, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(193, 193, 193))
+                        .addGap(47, 47, 47)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnVender))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(btnVoltar)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnVendas, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(181, 181, 181)
+                        .addComponent(jLabel1)))
+                .addContainerGap(61, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(32, 32, 32)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,21 +243,35 @@ public class listagemVIEW extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
+                                               
+   try {
         String id = id_produto_venda.getText();
-        
+
         ProdutosDAO produtosdao = new ProdutosDAO();
-        
-        //produtosdao.venderProduto(Integer.parseInt(id));
+
+        produtosdao.venderProduto(Integer.parseInt(id));
+
+        id_produto_venda.setText("");
         listarProdutos();
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(null, "Digite um ID válido!");
+     
+    }
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
-        //vendasVIEW vendas = new vendasVIEW(); 
-        //vendas.setVisible(true);
+                                                  
+    vendasVIEW vendas = new vendasVIEW(); 
+    vendas.setVisible(true);
+  ;
+
     }//GEN-LAST:event_btnVendasActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         this.dispose();
+   
+        
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     /**
@@ -203,6 +324,13 @@ public class listagemVIEW extends javax.swing.JFrame {
 
     private void listarProdutos(){
         try {
+           
+
+    listaProdutos.getColumnModel().getColumn(0).setPreferredWidth(50);
+    listaProdutos.getColumnModel().getColumn(1).setPreferredWidth(180);
+    listaProdutos.getColumnModel().getColumn(2).setPreferredWidth(100);
+    listaProdutos.getColumnModel().getColumn(3).setPreferredWidth(100);
+
             ProdutosDAO produtosdao = new ProdutosDAO();
             
             DefaultTableModel model = (DefaultTableModel) listaProdutos.getModel();
@@ -223,3 +351,4 @@ public class listagemVIEW extends javax.swing.JFrame {
     
     }
 }
+
